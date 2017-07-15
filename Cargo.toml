@@ -1,0 +1,7 @@
+[package]
+name = "breaking-the-cage-tty"
+version = "0.1.0"
+authors = ["takahawk <takahawkkun@gmail.com>"]
+
+[dependencies]
+breaking-the-cage = { git = "https://github.com/takahawk/BreakingTheCage-core.git" }
