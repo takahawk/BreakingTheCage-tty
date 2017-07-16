@@ -24,6 +24,11 @@
 
 extern crate breaking_the_cage_tty;
 
+use std::error::Error;
+
 fn main() {
-    breaking_the_cage_tty::main_loop();
+    match breaking_the_cage_tty::main_loop() {
+        Err(error) => println!("{}", error.description()),
+        Ok(_) => ()
+    }
 }

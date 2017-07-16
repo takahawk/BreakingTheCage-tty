@@ -22,24 +22,34 @@
     SOFTWARE.
 */
 
+extern crate breaking_the_cage as core;
+extern crate termion;
+
 mod render;
 mod control;
 
-extern crate breaking_the_cage as core;
+use std::io;
 
 use core::World;
 
 #[derive(PartialEq)]
-pub enum GameState {
+pub enum GameStatus {
     RUNNING,
     EXIT,
 }
 
-pub fn main_loop() {
-    let mut state = GameState::RUNNING;
+pub struct GameState {
+    status: GameStatus,
+}
+
+pub fn main_loop() -> io::Result<()> {
+    let mut state = GameState { status: GameStatus::RUNNING };
+    let mut renderer = render::Renderer::new()?;
     let mut world = World::new();
-    while state != GameState::EXIT {
-        render::render_all(&world);
+    while state.status != GameStatus::EXIT {
+        renderer.render_all(&world)?;
         control::handle_controls(&mut world, &mut state);
     }
+
+    Ok(())
 }
