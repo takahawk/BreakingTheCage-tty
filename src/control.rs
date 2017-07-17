@@ -32,16 +32,12 @@ use termion::input::TermRead;
 use termion::event::Key;
 
 pub fn handle_controls(world: &mut World, game_state: &mut GameState) {
-    // FIXME: now implementation requires Enter to pass events. Find another solution
     let stdin = stdin();
     stdout().flush().unwrap();
-    for event in stdin.events() {
-        println!("Event!");
-        if let Ok(event) = event {
-            match event {
-                Event::Key(key) => handle_key(world, game_state, key),
-                _ => (),
-            }
+    if let Some(Ok(event)) = stdin.events().nth(0) {
+        match event {
+            Event::Key(key) => handle_key(world, game_state, key),
+            _ => (),
         }
     }
     // stub
